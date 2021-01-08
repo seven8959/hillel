@@ -73,7 +73,17 @@ app.delete('/cities/:id', (req, res) => {
     })
 })
 
+//Edit city 
 
+app.put('/cities/:id', (req, res) => {
+    db.collection('cities').updateOne({_id: ObjectID(req.params.id), user_id: req.query.userid}, {$set: {name: req.body.city}}, (err, result) => {
+        if(err) {
+            console.log(err);
+            return res.sendStatus(500);
+        }
+        res.stsuts(200);
+    });
+});
 
 
 client.connect (function(err) {
