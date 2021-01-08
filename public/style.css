@@ -1,0 +1,72 @@
+body {
+    background-image: url(https://image.freepik.com/free-vector/weather-pattern_1061-487.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container {
+    padding: 20px;
+}
+
+header {
+    text-align: center; 
+    display: flex;
+    justify-content: center;      
+}
+
+input {
+    width: 85%;
+    height: 30px;
+    border-bottom-left-radius: 100px;
+    border-top-left-radius: 100px;
+    outline: none;
+    padding-left: 15px;
+    opacity: .9;
+}
+
+button {
+    border-bottom-right-radius: 100px;
+    border-top-right-radius: 100px;
+    background: cornflowerblue;
+    cursor: pointer;
+    transition: all .7s linear;
+}
+
+button:hover {
+    background: #0f5de9;
+    outline: none;
+    color: white;
+    transition: all .7s linear;
+}
+
+section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+ul {
+    margin: 15px 0 0 0;
+    list-style: none;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+ul#weather {
+    flex: 1 0 80%;
+    background: chartreuse;
+}
+
+.block_weather {
+    margin-top: 15px;
+    flex: 0 0 30%;
+    text-align: center;
+    background: teal;
+}
+
+.course_widget {
+    margin-top: 15px;
+    flex: 0 0 30%;
+    text-align: center;
+    background: red;
+}
