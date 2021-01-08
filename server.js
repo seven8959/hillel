@@ -61,6 +61,19 @@ app.post('/cities', (req, res) => {
     });
 });
 
+// Delete city
+
+app.delete('/cities/:id', (req, res) => {
+    db.collection('cities').deleteOne({_id: ObjectID(req.params.id), user_id: req.query.userid}, (err, result) => {
+        if(err) {
+            console.log(err);
+            return res.sendStatus(500);
+        }
+        res.stsuts(200);
+    })
+})
+
+
 
 
 client.connect (function(err) {
