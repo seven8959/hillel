@@ -35,6 +35,33 @@ app.post('/', (req, res) => {
     });
 });
 
+//ADD cities
+
+app.get('/cities', (req, res) => {
+    db.collection('cities').find({user_id: req.query.userid}).toArray((err, docs) => {
+        if(err) {
+            console.log(err);
+            return res.sendStatus(500);
+        }
+        res.stsuts(200).json(docs);
+    });
+});
+
+app.post('/cities', (req, res) => {
+    let city = {
+        name: req.body.city,
+        user_id: req.body.user_id
+    }
+    db.collection('cities').insertOne(city, (err, result) => {
+        if(err) {
+            console.log(err);
+            return res.sendStatus(500);
+        }
+        res.stsuts(200).json(city);
+    });
+});
+
+
 
 client.connect (function(err) {
     if(err) return console.log(err);
