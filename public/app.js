@@ -39,7 +39,31 @@ class ViewWeather {
     }
 
 
+    editWeather(cityId, data) {
+        let item = this.weatherCity.querySelector('#li' + cityId);
+        item.querySelector('p').innerHTML = data;
+    }
+
+
+    removeCity(cityId) {
+        this.weatherCity.querySelector('#li' + cityId).remove();
+    }
+
+
     
+
+
+    cityEdit(cityId) {
+        let item = this.weatherCity.querySelector('#li' + cityId);
+        let cityName = item.querySelector('h3').innerText;
+        item.innerHTML = '';
+        let inputEdit = document.createElement('input');
+        inputEdit.value = cityName;
+        let editBtn = document.createElement('button');
+        editBtn.innerHTML = 'Изменить';
+        editBtn.setAttribute('data-action', 'save');
+        item.append(inputEdit, editBtn);
+    }
 
 }
 
@@ -69,11 +93,24 @@ class ModelWeather {
     }
 
 
-    
+    deleteCity(id) {
+        this.cities.delete(id);
+    }
 
+
+   
+
+    editCityData(id, newName) {
+        let city = this.cities.get(id);
+        city.name = newName;
+        this.loadWeather(city);
+    }
+
+
+    
     loadWeather(city) {
         city.weather = 'Загрузка...';
-       
+        this.view.editWeather(city.id, city.weather);
 
         let url = new URL('http://api.openweathermap.org/data/2.5/weather');
         url.searchParams.set('appid', 'ef0286704f24b578161caf6eeba4fcfb');
@@ -98,7 +135,9 @@ class ModelWeather {
                 console.log(err);
                 city.weather = 'error';
             })
-            
+            .finally(() => {
+                this.view.editWeather(city.id, city.weather);
+            });
     }
 
 }
@@ -119,7 +158,8 @@ class ControllerWeather {
             .then(result => {
                 result.forEach(el => {
                     let item = this.view.renderWeather(el._id, el.name);
-                   
+                    let handler = this.editAndDeleteCity(el._id, this);
+                    item.addEventListener("click", handler);
                     this.model.addCity(el._id, el.name);
                 });
             })
@@ -143,7 +183,8 @@ class ControllerWeather {
             .then(res => res.json())
             .then(result => {
                 let item = this.view.renderWeather(result._id, result.name);
-               
+                let handler = this.editAndDeleteCity(result._id, this);
+                item.addEventListener('click', handler);
                 this.model.addCity(result._id, result.name);
             })
 
@@ -151,7 +192,56 @@ class ControllerWeather {
             .finally(() => this.view.inputCity.value = '');
     }
 
-    
+    editAndDeleteCity(id, controller) {
+        return {
+            id: id,
+            controller: controller,
+            handleEvent(e) {
+                let action = e.target.dataset.action;
+                switch (action) {
+
+                    case 'remove':
+                        fetch(`http://localhost:3000/cities/${this.id}?userid=${this.controller.model.userId}`, {
+                            method: 'DELETE'
+                        })
+
+                        .then(res => {
+                            if (res.status === 200) {
+                                this.controller.model.deleteCity(this.id);
+                                this.controller.view.removeCity(this.id);
+                            }
+                        })
+
+                        .catch(err => console.log(err));
+                        break;
+
+                    case 'edit':
+                        this.controller.view.cityEdit(this.id);
+                        break;
+
+                    case 'save':
+                        let newName = this.controller.view.weatherCity.querySelector('#li' + this.id + ' input').value;
+                        fetch(`http://localhost:3000/cities/${this.id}?userid=${this.controller.model.userId}`, {
+                            method: 'PUT',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({city: newName})
+                        })
+
+                        .finally(() => {
+                            this.controller.view.renderWeather(this.id, newName);
+                        })
+
+                        .then(res => {
+                            if (res.status === 200) {
+                                this.controller.model.editCityData(this.id, newName);
+                            }
+                        })
+                        .catch(err => console.log(err));
+                    break;
+                }
+            }
+        }
+    }
 }
 
 
