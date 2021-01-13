@@ -1,11 +1,8 @@
-// ef0286704f24b578161caf6eeba4fcfb
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
-
 
 let app = express();
 let db;
@@ -16,10 +13,9 @@ const client = new MongoClient(url);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 
-
-app.get('/', (req, res) => res.sendFile('public/index.html'), 
+app.get('/', (req, res) => res.sendFile(__dirname + '/public/index.html'), 
     (err) => console.log(err));
 
 app.post('/', (req, res) => {
@@ -43,7 +39,7 @@ app.get('/cities', (req, res) => {
             console.log(err);
             return res.sendStatus(500);
         }
-        res.stsuts(200).json(docs);
+        res.status(200).json(docs);
     });
 });
 
@@ -57,7 +53,7 @@ app.post('/cities', (req, res) => {
             console.log(err);
             return res.sendStatus(500);
         }
-        res.stsuts(200).json(city);
+        res.status(200).json(city);
     });
 });
 
@@ -69,7 +65,7 @@ app.delete('/cities/:id', (req, res) => {
             console.log(err);
             return res.sendStatus(500);
         }
-        res.stsuts(200);
+        res.sendStatus(200);
     })
 })
 
@@ -81,7 +77,7 @@ app.put('/cities/:id', (req, res) => {
             console.log(err);
             return res.sendStatus(500);
         }
-        res.stsuts(200);
+        res.sendStatus(200);
     });
 });
 
