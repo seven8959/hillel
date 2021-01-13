@@ -3,7 +3,6 @@ class ViewWeather {
         this.inputCity = document.querySelector('.city');
         this.addButtonCity = document.querySelector('.cityBtn');
         this.weatherCity = document.querySelector('#weather');
-        this.userWeather = document.querySelector('#user_weather');
     }
 
     renderWeather(cityId, cityName) {
@@ -50,9 +49,6 @@ class ViewWeather {
     }
 
 
-    
-
-
     cityEdit(cityId) {
         let item = this.weatherCity.querySelector('#li' + cityId);
         let cityName = item.querySelector('h3').innerText;
@@ -72,8 +68,8 @@ class ViewWeather {
 class ModelWeather {
     constructor(view) {
         this.view = view;
-        
         this.cities = new Map();
+        this.userId = localStorage.getItem('user_id');
         this.currentCity = {
             location: null,
             name: 'Неизвестно',
@@ -98,8 +94,6 @@ class ModelWeather {
     }
 
 
-   
-
     editCityData(id, newName) {
         let city = this.cities.get(id);
         city.name = newName;
@@ -107,17 +101,15 @@ class ModelWeather {
     }
 
 
-    
     loadWeather(city) {
         city.weather = 'Загрузка...';
         this.view.editWeather(city.id, city.weather);
-
         let url = new URL('http://api.openweathermap.org/data/2.5/weather');
         url.searchParams.set('appid', 'ef0286704f24b578161caf6eeba4fcfb');
         url.searchParams.set('q', city.name);
         url.searchParams.set('lang', 'ru');
         url.searchParams.set('units', 'metric');
-
+        
         fetch(url)
             .then(res => res.json())
             .then(result => {
@@ -126,7 +118,6 @@ class ModelWeather {
                                     <img src='https://cdn3.iconfinder.com/data/icons/disaster-and-weather-conditions/48/14-512.png' width='50' alt='Ветер'/> ${result.wind.speed} км/ч; 
                                     <img src='http://openweathermap.org/img/w/${result.weather[0].icon}.png' alt='${result.weather[0].description}'/>`;
                 }
-
                 else {
                     city.weather = JSON.stringify(result);
                 }
@@ -151,8 +142,6 @@ class ControllerWeather {
     }
 
     handle = () => {
-       
-
         fetch(`http://localhost:3000/cities?userid=${this.model.userId}`)
             .then(res => res.json())
             .then(result => {
@@ -187,7 +176,6 @@ class ControllerWeather {
                 item.addEventListener('click', handler);
                 this.model.addCity(result._id, result.name);
             })
-
             .catch(err => console.log(err))
             .finally(() => this.view.inputCity.value = '');
     }
@@ -213,11 +201,11 @@ class ControllerWeather {
                         })
 
                         .catch(err => console.log(err));
-                        break;
+                    break;
 
                     case 'edit':
                         this.controller.view.cityEdit(this.id);
-                        break;
+                    break;
 
                     case 'save':
                         let newName = this.controller.view.weatherCity.querySelector('#li' + this.id + ' input').value;
