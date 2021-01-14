@@ -148,12 +148,12 @@ class ControllerWeather {
                 result.forEach(el => {
                     let item = this.view.renderWeather(el._id, el.name);
                     let handler = this.editAndDeleteCity(el._id, this);
-                    item.addEventListener("click", handler);
+                    item.addEventListener('click', handler);
                     this.model.addCity(el._id, el.name);
                 });
             })
             .catch(err => console.log(err));
-            this.view.addButtonCity.addEventListener("click", this.showCities);
+            this.view.addButtonCity.addEventListener('click', this.showCities);
     }
 
 
