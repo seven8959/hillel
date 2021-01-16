@@ -30,9 +30,9 @@ class ViewWeather {
         item.append(div, editCityBtn, deleteBtn);
         div.append(cityTitle, weatherData);
 
-        let dataNow = document.querySelector('.data');
+        let dateNow = document.querySelector('.date');
         let month = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
-        dataNow.textContent = new Date().getDate() + ', ' + month[new Date().getMonth()];
+        dateNow.textContent = new Date().getDate() +  ' - ' + month[new Date().getMonth()];
 
         return item;
     }
@@ -115,7 +115,7 @@ class ModelWeather {
             .then(result => {
                 if (result.cod == 200) {
                     city.weather = `<img src='https://cdn.iconscout.com/icon/free/png-256/celsius-1403881-1187974.png' width='50' alt='Температура'/> ${(result.main.temp).toFixed(0)}&deg; C; 
-                                    <img src='https://cdn3.iconfinder.com/data/icons/disaster-and-weather-conditions/48/14-512.png' width='50' alt='Ветер'/> ${result.wind.speed} км/ч; 
+                                    <img src='https://cdn3.iconfinder.com/data/icons/disaster-and-weather-conditions/48/14-512.png' width='50' alt='Ветер'/> ${result.wind.speed} м/с; 
                                     <img src='http://openweathermap.org/img/w/${result.weather[0].icon}.png' alt='${result.weather[0].description}'/>`;
                 }
                 else {

@@ -15,12 +15,13 @@
 </head>
     <body> 
         <div class="container">
+        <h1>Погода</h1>    
         <header>
             <input type="text" class="city" placeholder="Введите город" required>
             <button type="submit" class="cityBtn">Показать</button>
         </header>
-        <section class="dataNow">
-            <h3 class="data"></h3>
+        <section class="dateNow">
+            <h3 class="date"></h3>
         </section>
         <section>
             <ul id="weather"></ul>  
@@ -29,13 +30,17 @@
                     <li id="current_weather">
                         <h2>Ваш город</h2>
                         <h3 id="current_city">Неизвестно</h3>
-                        <p id="temperature">null</p>
+                        <div id="temperature">null</div>
                     </li>
                 </ul>
             </div>
             <div class="course_widget">
                 <h2>Курс валют</h2>
                 <ul id="exchange_rates"></ul>
+                <button class="usd">USD</button>
+                <button class="eur">EURO</button>
+                <button class="rur">RUR</button>
+                <button class="btc">BTC</button>
             </div>
         </section> 
     </div>   

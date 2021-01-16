@@ -6,7 +6,7 @@ class UserView {
     userCurrentWeather(cityName, data) {
         const item = this.userWeather.querySelector('#current_weather');
         item.querySelector('h3').innerHTML = cityName;
-        item.querySelector('p').innerHTML = data;
+        item.querySelector('div').innerHTML = data;
     }
 }
 
@@ -53,9 +53,9 @@ class UserModel {
             .then(result => {
                 if (result.cod === 200) {
                     this.currentCity.name = result.name;
-                    this.currentCity.weather = `<img src='https://cdn.iconscout.com/icon/free/png-256/celsius-1403881-1187974.png' width='50' alt='Температура'/> ${(result.main.temp).toFixed(0)}&deg; C; 
-                                                <img src='https://cdn3.iconfinder.com/data/icons/disaster-and-weather-conditions/48/14-512.png' width='50' alt='Ветер'/> ${result.wind.speed} км/ч; 
-                                                <img src='http://openweathermap.org/img/w/${result.weather[0].icon}.png' alt='${result.weather[0].description}'/>`;
+                    this.currentCity.weather = `<div><img src='https://cdn.iconscout.com/icon/free/png-256/celsius-1403881-1187974.png' width='50' alt='Температура'/> <span>${(result.main.temp).toFixed(0)}&deg; C;</span></div> 
+                                                <div><img src='https://cdn3.iconfinder.com/data/icons/disaster-and-weather-conditions/48/14-512.png' width='50' alt='Ветер'/> <span>${result.wind.speed} м/с;</span></div> 
+                                                <img src='http://openweathermap.org/img/w/${result.weather[0].icon}.png' width='60' alt='${result.weather[0].description}'/>`;
                 } else {
                     this.currentCity.name = `error cod=${result.cod}`;
                     this.currentCity.weather = JSON.stringify(result);

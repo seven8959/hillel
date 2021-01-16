@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
+const path = require('path');
 
 let app = express();
 let db;
@@ -10,12 +11,13 @@ let db;
 const url = 'mongodb://localhost:27017';
 const dbName = 'weather_WEB_APP';
 const client = new MongoClient(url);
+const publicStaticDirPath = path.join(__dirname, '../public')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(publicStaticDirPath));
 
-app.get('/', (req, res) => res.sendFile(__dirname + '/public/index.html'), 
+app.get('/', (req, res) => res.sendFile(publicStaticDirPath + '/index.html'), 
     (err) => console.log(err));
 
 app.post('/', (req, res) => {
