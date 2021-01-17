@@ -60,6 +60,7 @@ class UserModel {
                     this.currentCity.name = `error cod=${result.cod}`;
                     this.currentCity.weather = JSON.stringify(result);
                 }
+                
             })
 
             .catch(err => {

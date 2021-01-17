@@ -3,6 +3,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 h1, h2, h3 {
@@ -36,8 +37,7 @@ input {
 }
 
 button {
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
+    border-radius: 10px;
     background: cornflowerblue;
     cursor: pointer;
     transition: all .7s linear;
@@ -49,6 +49,11 @@ button:hover {
     outline: none;
     color: white;
     transition: all .7s linear;
+}
+
+.cityBtn, button[data-action=save] {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
 }
 
 .date {
@@ -66,8 +71,8 @@ section {
 ul {
     margin: 0;
     list-style: none;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 #weather {
@@ -128,10 +133,10 @@ button[data-action=save] {
 }
 
 .block_weather {
-    margin-top: 15px;
+    margin-top: 20px;
     flex: 0 0 30%;
-    padding: 15px 0;
     text-align: center;
+    padding: 15px;
     border-radius: 10px;
     background: rgba(181, 104, 245, .8);
     box-shadow: -100px 130px 100px 120px rgba(220, 20, 60, .8) inset;
@@ -139,8 +144,8 @@ button[data-action=save] {
     animation: gradient 30s linear infinite alternate;
 }
 
-#current_city, #temperature {
-    margin-top: 15px;
+#current_city, #temperature,  #exchange_rates, #exchange_rates > li > p {
+    margin-top: 10px;
 }
 
 #temperature {
@@ -163,12 +168,23 @@ button[data-action=save] {
 }
 
 .course_widget {
-    margin-top: 15px;
-    flex: 0 0 30%;
+    margin-top: 20px;
     text-align: center;
-    background: red;
     border-radius: 10px;
+    padding: 15px;
+    background: rgba(181, 104, 245, .8);
+    box-shadow: -150px -170px 70px -100px rgba(220, 20, 60, .8) inset;
+    height: max-content;
+    animation: dgGradient 30s linear infinite alternate;
 }
+
+.course_widget button {
+    padding: 3px 7px;
+    border-radius: 5px;
+}
+
+
+
 
 
 
@@ -193,6 +209,18 @@ button[data-action=save] {
     100% {
         background: rgba(110, 228, 116, 0.8);
         box-shadow: -50px 100px 150px 50px rgba(53, 64, 226, 0.8) inset;  
+    }
+  }
+
+  @keyframes dgGradient {
+    50% {
+        background: rgba(135, 206, 235, .8);
+        box-shadow: 250px 150px 100px -100px rgba(228, 231, 33, 0.8) inset;
+    }
+
+    100% {
+        background: rgba(110, 228, 116, 0.8);
+        box-shadow: -250px -100px 150px -50px rgba(53, 64, 226, 0.8) inset;  
     }
   }
 
