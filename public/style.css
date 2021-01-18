@@ -1,8 +1,7 @@
 body {
     background: linear-gradient(73deg, rgba(251, 171, 126, .8), rgba(247, 206, 104, .7)), url(https://image.freepik.com/free-vector/weather-pattern_1061-487.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
+    background-size: 100%;
+    height: 100%;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -50,9 +49,9 @@ button:hover {
     transition: all .7s linear;
 }
 
-.cityBtn, button[data-action=save] {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
+.edit_list {
+    width: 100%;
+    display: flex;
 }
 
 .date {
@@ -87,6 +86,7 @@ ul {
 #weather li {
     display: flex;
     padding: 15px;
+    margin-top: 10px;
 }
 
 #weather li div {
@@ -108,6 +108,11 @@ button[data-action] {
     min-width: 70px;
 }
 
+.cityBtn, button[data-action=save] {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
 button[data-action=edit] {
     margin-left: auto;
 }
@@ -116,9 +121,19 @@ button[data-action=remove] {
     margin-left: 15px;
 }
 
-#weather li div p > img:nth-child(2), #weather li div p > img:nth-child(3) {
+.visibility, .clouds {
+    display: flex;
+    align-items: center;
+}
+
+#weather .visibility, #weather .clouds {
+    height: 50px;
+}
+
+#weather li div p > img:nth-child(2), #weather li div p > img:nth-child(3), #weather .visibility, #weather .clouds {
     border-left: 2px solid white;
-    padding-left: 10px;
+    padding-left: 5px;
+    margin-left: 5px;
     opacity: .8;
 }
 
@@ -154,6 +169,10 @@ button[data-action=remove] {
 
 #temperature > div > span {
     margin-left: 15px;
+}
+
+#temperature > .visibility > span, #temperature > .clouds > span {
+    margin-left: 0;
 }
 
 .course_widget {
@@ -239,16 +258,26 @@ button[data-action=remove] {
     }
 
     #weather li {
-        display: block;
+        display: flex;
+        flex-wrap: wrap;
     }
     
     #weather li div {
         font-size: inherit;
     }
     
-    #weather li div p {
-        justify-content: start;
+    #weather > li > div > p {
+        flex-wrap: wrap;
         margin: 15px 0;
+        justify-content: flex-start;
+    }
+
+    #weather > li > div > p > div {
+        margin-top: 0;
+    }
+
+    #weather > li > div > p > .clouds {
+        margin-top: 10px;
     }
        
     button[data-action=edit] {
@@ -266,8 +295,9 @@ button[data-action=remove] {
     
     #temperature {
         flex-direction: row;
-        align-items: baseline;
+        align-items: center;
         min-width: 300px;
+        flex-wrap: wrap;
     }
     
     #temperature > img, #temperature > div+div {
@@ -287,7 +317,22 @@ button[data-action=remove] {
         width: 50px;
     }
 
-    #temperature > div+div>img, #temperature > img {
+    #temperature > .visibility, #temperature > .clouds {
+        height: 50px;
+        
+    }
+
+    #temperature > .clouds {
+        margin-top: 10px;
+    }
+
+    @media screen and (min-width: 300px) and (max-width: 499px) {
+        #temperature > .visibility, #temperature > .clouds, #weather > li > div > p > div {
+            margin-top: 10px;
+        }
+    }
+
+    #temperature > div+div>img, #temperature > img, #temperature > .visibility, #temperature > .clouds {
         border-left: 2px solid white;
         padding-left: 5px;
         margin-left: 5px;
@@ -316,7 +361,6 @@ button[data-action=remove] {
         padding: 15px;
     }
      
-    
     .date_now, section {
         margin-top: 15px;
     }
@@ -325,10 +369,33 @@ button[data-action=remove] {
         padding: 0 20px;
     }
            
-     #weather li div {
+    #weather li div {
         font-size: inherit;
     }
- 
+    
+    #weather > li > div > p {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    #weather > li > div > p > div {
+        margin-top: 10px;
+    }
+
+    @media screen and (min-width: 697px) and (max-width: 768px) {
+        #temperature > .visibility, #temperature > .clouds, #weather > li > div > p > .visibility {
+            margin-top: 0;
+        }
+    }
+    
+    #weather > .clouds {
+        margin-top: 10px;
+    }
+
+    #weather > .visibility {
+        margin-top: 0;
+    }
+
     .block_weather {
         margin-top: 15px;
      }

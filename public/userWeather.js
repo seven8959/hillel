@@ -52,10 +52,13 @@ class UserModel {
             .then(res => res.json())
             .then(result => {
                 if (result.cod === 200) {
-                    this.currentCity.name = result.name;
+                    this.currentCity.name = result.name;    
+                  
                     this.currentCity.weather = `<div><img src='https://cdn.iconscout.com/icon/free/png-256/celsius-1403881-1187974.png' width='50' alt='Температура'/> <span>${(result.main.temp).toFixed(0)}&deg; C;</span></div> 
                                                 <div><img src='https://cdn3.iconfinder.com/data/icons/disaster-and-weather-conditions/48/14-512.png' width='50' alt='Ветер'/> <span>${result.wind.speed} м/с;</span></div> 
-                                                <img src='http://openweathermap.org/img/w/${result.weather[0].icon}.png' width='60' alt='${result.weather[0].description}'/>`;
+                                                <img src='http://openweathermap.org/img/w/${result.weather[0].icon}.png' width='60' alt='${result.weather[0].description}'/>
+                                                <div class='visibility'><span>Видимость: ${result.visibility} м</span></div>
+                                                <div class='clouds'><span >Облачность: ${result.clouds.all} %</span></div>`;
                 } else {
                     this.currentCity.name = `error cod=${result.cod}`;
                     this.currentCity.weather = JSON.stringify(result);
